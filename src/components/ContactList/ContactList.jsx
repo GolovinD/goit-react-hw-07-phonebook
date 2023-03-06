@@ -13,15 +13,15 @@ const ContactList = () => {
 
   function getContactsData() {
     const standarValue = filter.toLowerCase();
-    return contacts.filter(contact =>
+    return contacts.items.filter(contact =>
       contact.name.toLowerCase().includes(standarValue)
     );
   }
 
   return (
     <ul className={css.contacts}>
-      {filteredOutContacts.map(({ id, name, number }) => (
-        <ContactItem key={id} id={id} name={name} number={number} />
+      {filteredOutContacts.map(({ id, name, phone }) => (
+        <ContactItem key={id} id={id} name={name} number={phone} />
       ))}
     </ul>
   );

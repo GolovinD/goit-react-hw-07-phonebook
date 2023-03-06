@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 
-import { nanoid } from 'nanoid';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contactsSlice';
+import { addContact } from '../../redux/operations';
 
 import css from './ContactForm.module.css';
 
@@ -31,9 +30,9 @@ const ContactForm = () => {
       return;
     }
 
-    function addContacts(name, number) {
+    function addContacts(name, phone) {
       if (
-        contacts.find(
+        contacts.items.find(
           contact => contact.name.toLowerCase() === name.toLowerCase()
         )
       ) {
@@ -42,9 +41,8 @@ const ContactForm = () => {
       }
 
       const newContact = {
-        id: nanoid(),
         name,
-        number,
+        phone,
       };
 
       dispatch(addContact(newContact));

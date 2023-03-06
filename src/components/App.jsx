@@ -3,11 +3,18 @@ import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
 import Section from './Section/Section';
 
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { getContacts } from 'redux/selectors';
+import { fetchContacts } from '../redux/operations';
 
 function App() {
-  const contacts = useSelector(getContacts);
+  const { items, isLoading, error } = useSelector(getContacts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <div>
@@ -17,7 +24,10 @@ function App() {
 
       <Section title="Contact">
         <Filter />
-        {contacts.length > 0 && <ContactList />}
+        {isLoading && <p>Loading contacts...</p>}
+        {error && <p>{error}</p>}
+        {items.length > 0 && <ContactList />}
+        {/* {isLoading && !error && <b>Loading contacts...</b>} */}
       </Section>
     </div>
   );
